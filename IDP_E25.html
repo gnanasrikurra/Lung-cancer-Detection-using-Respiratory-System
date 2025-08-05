@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login & Signup | Lung Cancer Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <style>
+    body {
+      background: linear-gradient(to right, #6dd5ed, #2193b0);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .auth-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.25);
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      gap: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .auth-box {
+      flex: 1 1 350px;
+      min-width: 320px;
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 6px 25px rgba(33, 147, 176, 0.15);
+      transition: transform 0.3s ease;
+      background: #fff;
+    }
+
+    .auth-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(33, 147, 176, 0.3);
+    }
+
+    .auth-box h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2193b0;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1.8px solid #b0cfe6;
+      padding: 12px 15px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #2193b0;
+      box-shadow: 0 0 10px rgba(33, 147, 176, 0.5);
+      outline: none;
+    }
+
+    .btn-primary {
+      background-color: #2193b0;
+      border: none;
+      font-weight: 700;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #176b85;
+      box-shadow: 0 0 15px rgba(23, 107, 133, 0.7);
+    }
+
+    .form-text {
+      text-align: center;
+      color: #444;
+      font-size: 1rem;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+
+    .logo {
+      width: 96px;
+      display: block;
+      margin: 0 auto 25px;
+      filter: drop-shadow(0 2px 4px rgba(33, 147, 176, 0.3));
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .auth-container {
+        flex-direction: column;
+        max-width: 420px;
+        padding: 30px 20px;
+      }
+      .auth-box {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="auth-container">
+
+  <!-- Login Box -->
+  <div class="auth-box">
+    <img src="https://img.icons8.com/fluency/96/lungs.png" alt="Lung Icon" class="logo" />
+    <h3>Lung Cancer Detection Login</h3>
+    <form>
+      <div class="mb-3">
+        <label for="login-username" class="form-label">Email or Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="login-username"
+          name="username"
+          placeholder="Enter your email or username"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="login-password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="login-password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <!-- Button navigates to home.html on click -->
+      <button type="button" class="btn btn-primary w-100" onclick="window.location.href='home.html'">Login</button>
+      <p class="form-text mt-3">
+        Don't have an account? Please fill out the Signup form.
+      </p>
+    </form>
+  </div>
+
+  <!-- Signup Box -->
+  <div class="auth-box">
+    <img src="https://img.icons8.com/color/96/add-user-male--v1.png" alt="Signup Icon" class="logo" />
+    <h3>Create a New Account</h3>
+    <form>
+      <div class="mb-3">
+        <label for="signup-username" class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="signup-username"
+          name="username"
+          placeholder="Choose a username"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="signup-email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="signup-email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="signup-password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="signup-password"
+          name="password"
+          placeholder="Create a password"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="signup-confirm-password"
+          name="confirm_password"
+          placeholder="Confirm your password"
+          required
+        />
+      </div>
+      <!-- Button navigates to home.html on click -->
+      <button type="button" class="btn btn-primary w-100" onclick="window.location.href='home.html'">Sign Up</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
