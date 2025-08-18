@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cancer Detection Portal</title>
+  <style>
+    /* Reset & basics */
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #a8c0ffcc;
+      margin-top: 0.4rem;
+      font-weight: 500;
+    }
+
+    main {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      width: 280px;
+      padding: 2.5rem 1.8rem;
+      box-shadow:
+        0 0 10px rgba(255,255,255,0.07),
+        inset 0 0 10px rgba(255,255,255,0.1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      color: #d7e1ff;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, #5c67f2, #ff6584, #ffb56b);
+      animation: rotate 6s linear infinite;
+      filter: blur(30px);
+      opacity: 0.4;
+      z-index: 0;
+      border-radius: 50%;
+      transition: opacity 0.3s ease;
+    }
+    .card:hover::before {
+      opacity: 0.7;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .card svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1.3rem;
+      z-index: 1;
+      fill: #a3b0ff;
+      filter: drop-shadow(0 0 2px rgba(163,176,255,0.7));
+      flex-shrink: 0;
+    }
+
+    .card h2 {
+      margin: 0 0 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      z-index: 1;
+    }
+
+    .card p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #c0c8ffcc;
+      flex-grow: 1;
+      z-index: 1;
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 4rem;
+      color: #8fa1c6aa;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      main {
+        gap: 1.6rem;
+      }
+      .card {
+        width: 90vw;
+        max-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cancer Detection Portal</h1>
+    <p>Choose a cancer type to proceed with detection</p>
+  </header>
+
+  <main>
+    <div class="card" onclick="redirectTo('lung')" tabindex="0" role="button" aria-label="Lung Cancer detection">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+        <path d="M32 4c-4.5 0-8.1 3.6-8.1 8v11.6c-2.4 1.4-4 4-4 6.9v11.3c0 2.7 1.8 5 4.2 5s4.2-2.2 4.2-5v-5.3h3.8v5.3c0 2.7 1.8 5 4.2 5s4.2-2.2 4.2-5V30.5c0-3-1.8-5.7-4.2-6.9V12c0-4.4-3.6-8-8.1-8zM25 12c0-2.2 1.8-4 4-4s4 1.8 4 4v16c0 1-1.2 1.9-2.7 1.9S25 29 25 28V12z"/>
+      </svg>
+      <h2>Lung Cancer</h2>
+      <p>Detect lung cancer using respiratory system analysis.</p>
+    </div>
+
+    <div class="card" onclick="redirectTo('brain')" tabindex="0" role="button" aria-label="Breast Cancer detection">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+        <path d="M32 6c-7.2 0-12 7.7-12 13.9 0 5.7 4.8 9.1 7.8 11.3 1.4 1.1 3.4 3.2 3.4 6.1v12.7c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V32.8h-4v12.7c0 1.4-1.1 2.5-2.5 2.5S20 45 20 43.6V26c0-5.7 4.8-14 12-14s12 8.3 12 14v17.6c0 1.4-1.1 2.5-2.5 2.5S39 44.8 39 43.4V24.3c0-2.1-1.7-3.9-3.9-3.9-1.6 0-3 1-3.6 2.4-.5-2-2.3-3.8-4.5-3.8z"/>
+      </svg>
+      <h2>Brain Cancer</h2>
+      <p>Use imaging and diagnostic features to detect brain cancer.</p>
+    </div>
+
+    <div class="card" onclick="redirectTo('prostate')" tabindex="0" role="button" aria-label="Prostate Cancer detection">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+        <path d="M32 8c-7 0-12 5.6-12 12.5 0 7.1 9.2 16.4 11.7 18.9 0 0 0 0 0 0l.3.3v6.7c0 1.3-1 2.3-2.3 2.3S27 47 27 45.7V38.4c-2.2-2-7-7-7-14 0-4.7 3.3-8.3 7.3-8.3S35 19 35 23.7c0 1-.5 2-1.3 2.7l4.2 4.2c3.2-2.9 5.8-7.8 5.8-13 0-6.9-5.6-12.1-12.7-12.1z"/>
+      </svg>
+      <h2>Prostate Cancer</h2>
+      <p>Analyze clinical symptoms for early detection of prostate cancer.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cancer AI Detector</p>
+  </footer>
+
+  <script>
+    function redirectTo(cancerType) {
+      switch (cancerType) {
+        case 'lung':
+          alert("Navigate to Lung Cancer detection page");
+          break;
+        case 'breast':
+          alert("Navigate to Breast Cancer detection page");
+          break;
+        case 'prostate':
+          alert("Navigate to Prostate Cancer detection page");
+          break;
+        default:
+          alert("Invalid selection");
+      }
+    }
+  </script>
+</body>
+</html>
