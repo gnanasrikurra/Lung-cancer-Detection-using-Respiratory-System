@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cancer Detection Portal with Auth</title>
+
+  <!-- Bootstrap CSS for forms -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* --- LOGIN/SIGNUP Styles --- */
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #6dd5ed, #2193b0);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .auth-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.25);
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      gap: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .auth-box {
+      flex: 1 1 350px;
+      min-width: 320px;
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 6px 25px rgba(33, 147, 176, 0.15);
+      transition: transform 0.3s ease;
+      background: #fff;
+    }
+
+    .auth-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(33, 147, 176, 0.3);
+    }
+
+    .auth-box h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2193b0;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1.8px solid #b0cfe6;
+      padding: 12px 15px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #2193b0;
+      box-shadow: 0 0 10px rgba(33, 147, 176, 0.5);
+      outline: none;
+    }
+
+    .btn-primary {
+      background-color: #2193b0;
+      border: none;
+      font-weight: 700;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #176b85;
+      box-shadow: 0 0 15px rgba(23, 107, 133, 0.7);
+    }
+
+    .form-text {
+      text-align: center;
+      color: #444;
+      font-size: 1rem;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+
+    .logo {
+      width: 96px;
+      display: block;
+      margin: 0 auto 25px;
+      filter: drop-shadow(0 2px 4px rgba(33, 147, 176, 0.3));
+    }
+
+    /* Responsive for auth */
+    @media (max-width: 768px) {
+      .auth-container {
+        flex-direction: column;
+        max-width: 420px;
+        padding: 30px 20px;
+      }
+      .auth-box {
+        min-width: 100%;
+      }
+    }
+
+    /* --- CANCER PORTAL Styles --- */
+    #cancer-portal {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      width: 100vw;
+      overflow-y: auto;
+    }
+
+    #cancer-portal header {
+      text-align: center;
+      margin-bottom: 3rem;
+      user-select: none;
+    }
+
+    #cancer-portal header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+
+    #cancer-portal header p {
+      font-size: 1.2rem;
+      color: #a8c0ffcc;
+      margin-top: 0.4rem;
+      font-weight: 500;
+    }
+
+    #cancer-portal main {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    #cancer-portal .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      width: 280px;
+      padding: 2.5rem 1.8rem;
+      box-shadow:
+        0 0 10px rgba(255,255,255,0.07),
+        inset 0 0 10px rgba(255,255,255,0.1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      color: #d7e1ff;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      transition: transform 0.3s ease;
+    }
+
+    #cancer-portal .card:hover {
+      transform: scale(1.05);
+    }
+
+    #cancer-portal .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, #5c67f2, #ff6584, #ffb56b);
+      animation: rotate 6s linear infinite;
+      filter: blur(30px);
+      opacity: 0.4;
+      z-index: 0;
+      border-radius: 50%;
+      transition: opacity 0.3s ease;
+    }
+    #cancer-portal .card:hover::before {
+      opacity: 0.7;
+    }
+
+    @keyframes rotate {
+      0% {transform: rotate(0deg);}
+      100% {transform: rotate(360deg);}
+    }
+
+    #cancer-portal .card svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1.3rem;
+      z-index: 1;
+      fill: #a3b0ff;
+      filter: drop-shadow(0 0 2px rgba(163,176,255,0.7));
+      flex-shrink: 0;
+    }
+
+    #cancer-portal .card h2 {
+      margin: 0 0 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      z-index: 1;
+    }
+
+    #cancer-portal .card p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #c0c8ffcc;
+      flex-grow: 1;
+      z-index: 1;
+      margin-bottom: 0;
+    }
+
+    #cancer-portal footer {
+      margin-top: 4rem;
+      color: #8fa1c6aa;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    /* Responsive for portal */
+    @media (max-width: 960px) {
+      #cancer-portal main {
+        gap: 1.6rem;
+      }
+      #cancer-portal .card {
+        width: 90vw;
+        max-width: 320px;
+      }
+    }
+
+    /* Logout Button */
+    #logout-btn {
+      background-color: #ff6584;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #logout-btn:hover {
+      background-color: #e04f6b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTH FORM CONTAINER -->
+  <div id="auth-container" class="auth-container">
+    <!-- Login Box -->
+    <div class="auth-box">
+      <img src="https://img.icons8.com/fluency/96/lungs.png" alt="Lung Icon" class="logo" />
+      <h3>Lung Cancer Detection Login</h3>
+      <form id="login-form">
+        <div class="mb-3">
+          <label for="login-username" class="form-label">Email or Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="login-username"
+            name="username"
+            placeholder="Enter your email or username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="login-password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="login-password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+        <p class="form-text mt-3">
+          Don't have an account? Please fill out the Signup form.
+        </p>
+      </form>
+    </div>
+
+    <!-- Signup Box -->
+    <div class="auth-box">
+      <img src="https://img.icons8.com/color/96/add-user-male--v1.png" alt="Signup Icon" class="logo" />
+      <h3>Create a New Account</h3>
+      <form id="signup-form">
+        <div class="mb-3">
+          <label for="signup-username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="signup-username"
+            name="username"
+            placeholder="Choose a username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="signup-email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="signup-email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="signup-password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="signup-password"
+            name="password"
+            placeholder="Create a password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="signup-confirm-password"
+            name="confirm_password"
+            placeholder="Confirm your password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CANCER DETECTION PORTAL -->
+  <section id="cancer-portal">
+    <button id="logout-btn" title="Logout">Logout</button>
+    <header>
+      <h1>Cancer Detection Portal</h1>
+      <p>Choose a cancer type to proceed with detection</p>
+    </header>
+
+    <main>
+      <div class="card" tabindex="0" role="button" aria-label="Lung Cancer detection" onclick="redirectTo('lung')">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+          <path d="M32 4c-4.5 0-8.1 3.6-8.1 8v11.6c-2.4 1.4-4 4-4 6.9v11.2c0 1.7 1.4 3.1 3.1 3.1s3.1-1.4 3.1-3.1V30.3c0-1.5 1.2-2.7 2.7-2.7h1.4c1.5 0 2.7 1.2 2.7 2.7v11.4c0 1.7 1.4 3.1 3.1 3.1s3.1-1.4 3.1-3.1V24.7c0-2.9-1.6-5.5-4-6.9V12c0-4.4-3.6-8-8-8z" />
+        </svg>
+        <h2>Lung Cancer</h2>
+        <p>Early detection of lung cancer through AI-powered analysis.</p>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="Brain Cancer detection" onclick="redirectTo('brain')">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+          <path d="M32 4a12 12 0 0 0-12 12c0 4.4 2.9 10.3 7.3 14.3 3.7 3.1 5.2 6.1 5.2 8.1 0 1.7-1.4 3.1-3.1 3.1s-3.1-1.4-3.1-3.1v-4.5c0-1.7-1.4-3.1-3.1-3.1H17c-1.7 0-3.1 1.4-3.1 3.1v7.8c0 4.4 3.6 8 8 8h14c4.4 0 8-3.6 8-8v-7.8c0-4.2-3.4-7.8-7.8-7.8-3.7 0-5.7-3.7-5.7-3.7S32 16.6 32 16a12 12 0 0 0 0-12z" />
+        </svg>
+        <h2>Brain Cancer</h2>
+        <p>Advanced tools for brain cancer screening and diagnosis.</p>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="Prostate Cancer detection" onclick="redirectTo('prostate')">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+          <path d="M32 4c-4.4 0-8 3.6-8 8v16.8c-3.4 1.3-6 4.8-6 8.9v5.3c0 2.9 2.4 5.3 5.3 5.3h9.4c2.9 0 5.3-2.4 5.3-5.3v-5.3c0-4.1-2.6-7.6-6-8.9V12c0-4.4-3.6-8-8-8z" />
+        </svg>
+        <h2>Prostate Cancer</h2>
+        <p>Effective detection of prostate cancer at early stages.</p>
+      </div>
+    </main>
+
+    <footer>&copy; 2025 Cancer Detection Portal</footer>
+  </section>
+
+  <script>
+    // Redirect function for cards (replace alert with actual navigation)
+    function redirectTo(cancerType) {
+      alert(`Redirecting to ${cancerType} cancer detection page.`);
+      // For actual use: window.location.href = `/${cancerType}-detection.html`;
+    }
+
+    // Keyboard accessibility: trigger click on Enter or Space
+    document.querySelectorAll('#cancer-portal .card').forEach(card => {
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+
+    const authContainer = document.getElementById('auth-container');
+    const cancerPortal = document.getElementById('cancer-portal');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // Simple fake login/signup handlers
+    document.getElementById('login-form').addEventListener('submit', e => {
+      e.preventDefault();
+      // In real life, validate credentials here
+      alert('Login successful!');
+      showPortal();
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', e => {
+      e.preventDefault();
+
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords don't match!");
+        return;
+      }
+
+      // In real life, submit signup data here
+      alert('Signup successful!');
+      showPortal();
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      // Clear forms if needed
+      document.getElementById('login-form').reset();
+      document.getElementById('signup-form').reset();
+
+      cancerPortal.style.display = 'none';
+      authContainer.style.display = 'flex';
+    });
+
+    function showPortal() {
+      authContainer.style.display = 'none';
+      cancerPortal.style.display = 'flex';
+      // Scroll to top on show
+      window.scrollTo(0, 0);
+    }
+  </script>
+</body>
+</html>

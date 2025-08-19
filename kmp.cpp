@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+void computeLPSArray(char* pat,int m,int *lps){
+	int len=0;
+	int i=1;
+	lps[0]=0;
+	while(i<m){
+		if(pat[i]==pat[len]){
+			len++;
+			lps[i]=len;
+			i++;
+		}
+		else{
+		if(len!=0){
+			len=lps[len-1];
+			i++;
+		}
+		else{
+			lps[i]=0;
+			i++;
+		}
+		}
+	}
+}
+void computeLPSArray(char *pat, int M, int *lps);
+void KMPSearch(char* pat,char*txt){
+	int m=strlen(pat);
+	int n=strlen(txt);
+	int i=0;
+	int j=0;
+	int *lps = (int *) malloc(sizeof(int) * m);
+	computeLPSArray(pat,m,lps);
+	while(i<n){
+		        if (pat[j] == txt[i]) {
+            j++;
+            i++;
+        }
+        if (j == m) {
+            printf("Found pattern at index %d \n", i - j);
+            j = lps[j - 1];
+        }
+		else if (i < n && pat[j] != txt[i]) {
+            if (j != 0)
+                j = lps[j - 1];
+            else
+                i = i + 1;
+        }
+    }
+    free(lps); 
+}
+int main(){
+	char *txt = "ABABDABACDABABCABAB";
+    char *pat = "ABABCABAB";
+    KMPSearch(pat, txt);
+    return 0;
+
+}
